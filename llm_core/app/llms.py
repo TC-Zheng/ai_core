@@ -1,22 +1,18 @@
-from fastapi import APIRouter, HTTPException
-from transformers import AutoModel
-import os
+from fastapi import APIRouter, Depends
+
+from llm_core.api.request_models import DownloadLLMRequest
+from llm_core.api.response_models import DownloadLLMResponse
+from llm_core.dependencies.llm_dependency import get_download_llm_service
+from llm_core.service.download_llm_service import DownloadLLMService
 
 router = APIRouter()
-test = "test"
-@router.post("/download_model/")
-async def download_model(model_id: str):
-    try:
-        # Define the directory where you want to store the models
-        model_directory = os.path.join("models", model_id)
-        os.makedirs(model_directory, exist_ok=True)
 
-        # Download the model from Hugging Face
-        model = AutoModel.from_pretrained(model_id)
 
-        # Save the model locally
-        model.save_pretrained(model_directory)
+@router.post("/download_llm/")
+async def download_llm(
+    download_llm_request: DownloadLLMRequest,
+    download_llm_service: DownloadLLMService = Depends(get_download_llm_service),
+) -> DownloadLLMResponse:
+    download_llm_service.download_llm(download_llm_request.hugging_face_model_id)
 
-        return {"message": f"Model {model_id} downloaded and saved successfully."}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return DownloadLLMResponse(success=True, message="Model downloaded successfully")

@@ -1,18 +1,14 @@
+from transformers import AutoModel, AutoTokenizer
+
+from llm_core.data_access.llm_repository import LLMRepository
 
 
-# class DownloadLLMService:
-#     def __init__(self, model_id: str):
-#         self.model_id = model_id
+class DownloadLLMService:
+    def __init__(self, repository: LLMRepository) -> None:
+        self.repository = repository
 
-#     def download_model(self):
-#         # Define the directory where you want to store the models
-#         model_directory = os.path.join("models", self.model_id)
-#         os.makedirs(model_directory, exist_ok=True)
+    def download_llm(self, huggingface_model_id: str) -> None:
+        model = AutoModel.from_pretrained(huggingface_model_id)
+        tokenizer = AutoTokenizer.from_pretrained(huggingface_model_id)
 
-#         # Download the model from Hugging Face
-#         model = AutoModel.from_pretrained(self.model_id)
-
-#         # Save the model locally
-#         model.save_pretrained(model_directory)
-
-#         return {"message": f"Model {self.model_id} downloaded and saved successfully."}
+        self.repository.save_llm(model, tokenizer, huggingface_model_id)

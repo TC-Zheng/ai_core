@@ -15,7 +15,13 @@ transformers = "^4.40.1"
 sqlalchemy = "^2.0.29"
 python-dotenv = "^1.0.1"
 fastapi = "^0.110.2"
+uvicorn = "^0.29.0"
 
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.10.0"
+pytest = "^8.1.2"
+ruff = "^0.4.2"
 
 [build-system]
 requires = ["poetry-core"]
