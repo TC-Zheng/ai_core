@@ -10,8 +10,8 @@ ruff format
 
 # Run mypy
 echo "Running mypy..."
-mypy .
+mypy llm_core/
 
 # Run pytest
 echo "Running pytest..."
-pytest
+pytest test/

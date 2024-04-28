@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from llm_core.app.llms import router as llm_router
+from llm_core.app.llm_router import router as llm_router
 import uvicorn
 
 app = FastAPI()
