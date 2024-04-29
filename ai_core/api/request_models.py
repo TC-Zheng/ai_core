@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
 
-class DownloadLLMRequest(BaseModel):
+class DownloadAIModelRequest(BaseModel):
     hugging_face_model_id: str

@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "llm_core"
+name = "ai_core"
 version = "0.1.0"
 description = ""
 authors = ["Tianchen Zheng <eric.tc.zheng@gmail.com>"]
 readme = "README.md"
 packages = [
-    { include = "llm_core" }
+    { include = "ai_core" }
 ]
 
 [tool.poetry.dependencies]
