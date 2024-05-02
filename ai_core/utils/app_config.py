@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 
 
-class Config:
+class AppConfig:
     def __init__(self) -> None:
         load_dotenv(override=True)
         self._load_env_vars()
@@ -13,8 +13,8 @@ class Config:
 
 
 # Make a singleton instance of the Config class
-config = Config()
+appConfig = AppConfig()
 
 
-def get_config() -> Config:
-    return config
+def get_app_config() -> AppConfig:
+    return appConfig

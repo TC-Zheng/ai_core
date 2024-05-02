@@ -1,26 +1,24 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Generic, List, Dict, Any, Union
 
-T = TypeVar("T")  # Generic type variable for entity types
-
-
-class RepositoryBase(ABC, Generic[T]):
+class RepositoryBase(ABC):
+    def __init__(self):
+        self.rollback_occurred = False
     @abstractmethod
-    def create(self, entity: T) -> T:
-        pass
+    def rollback(self):
+        raise NotImplementedError("Each child class must implement this method")
 
-    @abstractmethod
-    def read_all(self) -> List[T]:
-        pass
-
-    @abstractmethod
-    def read(self, criteria: Dict[str, Any]) -> T:
-        pass
-
-    @abstractmethod
-    def update(self, entity: T) -> T:
-        pass
-
-    @abstractmethod
-    def delete(self, entity: T) -> T:
-        pass
+class DBRepositoryBase(RepositoryBase):
+    def __init__(self, async_session):
+        super().__init__()
+        self.async_session  = async_session 
+    def rollback(self):
+        self.rollback_occurred = True
+        self.async_session .rollback()
+        
+class FileRepositoryBase(RepositoryBase):
+    def __init__(self, file_path):
+        super().__init__()
+        self.file_path = file_path
+    def rollback(self):
+        self.rollback_occurred = True
+        

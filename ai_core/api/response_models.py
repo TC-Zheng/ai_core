@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
 
-class DownloadAIModelResponse(BaseModel):
+class DownloadHFModelResponse(BaseModel):
     success: bool
     message: str

@@ -4,10 +4,10 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from ai_core.api.request_models import DownloadAIModelRequest
+from ai_core.api.request_models import DownloadHFModelRequest
 from ai_core.app.main import app
 from ai_core.service.download_ai_model_service import DownloadAIModelService
-from ai_core.app.ai_router import get_download_ai_model_service
+from ai_core.app.ai_router import get_download_hf_lang_model_service
 
 
 @pytest.fixture(scope="class")
@@ -21,12 +21,14 @@ class TestDownloadLLM:
     def test_valid_request_return_success(self):
         # Mock
         mock_service = MagicMock(spec=DownloadAIModelService)
-        mock_service.download_llm.return_value = None
-        app.dependency_overrides[get_download_ai_model_service] = lambda: mock_service
+        mock_service.download_and_save.return_value = None
+        app.dependency_overrides[get_download_hf_lang_model_service] = (
+            lambda: mock_service
+        )
 
         # Run and Assert
         response = self.client.post(
-            "/download_ai_model/",
+            "/download/hf_lang_model/",
             json={"hugging_face_model_id": "gpt2"},
         )
 
@@ -36,14 +38,14 @@ class TestDownloadLLM:
             "message": "Model downloaded successfully",
         }
 
-        mock_service.download_llm.assert_called_once_with(
-            DownloadAIModelRequest(hugging_face_model_id="gpt2")
+        mock_service.download_and_save.assert_called_once_with(
+            DownloadHFModelRequest(hugging_face_model_id="gpt2")
         )
 
     def test_invalid_request_return_error(self):
         # Run and Assert
         response = self.client.post(
-            "/download_ai_model/",
+            "/download/hf_lang_model/",
             json={"hugging_face_model_id_2": "gpt2"},
         )
         assert response.status_code == 422

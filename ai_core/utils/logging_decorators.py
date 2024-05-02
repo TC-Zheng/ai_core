@@ -1,11 +1,14 @@
 import functools
 import logging
 import time
+from typing import Any, Callable, TypeVar, cast
+
+T = TypeVar("T", bound=Callable[..., Any])  # A type variable that can be any function
 
 
-def debug_log(func):
+def debug_log(func: T) -> T:
     @functools.wraps(func)
-    def wrapper(*args, **kwargs):
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
         logger = logging.getLogger(func.__module__)
         start_time = time.time()  # Capture the start time
         logger.debug(f"Entering {func.__name__} with args={args}, kwargs={kwargs}")
@@ -15,4 +18,4 @@ def debug_log(func):
         )
         return result
 
-    return wrapper
+    return cast(T, wrapper)

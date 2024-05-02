@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+class BaseRequest(BaseModel):
+    pass
 
-class DownloadAIModelRequest(BaseModel):
+class DownloadHFModelRequest(BaseRequest):
     hugging_face_model_id: str
