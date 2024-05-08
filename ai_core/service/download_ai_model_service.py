@@ -8,6 +8,7 @@ from ai_core.api.request_models import BaseRequest
 T = TypeVar("T", bound=BaseRequest)
 S = TypeVar("S", bound=BaseModel)
 
+
 class DownloadAIModelService:
     def __init__(
         self,

@@ -3,7 +3,7 @@ from fastapi import Depends
 from ai_core.adapter.download_adapters import (
     HFLangModelDownloadAdapter,
 )
-from ai_core.data_access.hf_llm_db_repository import HFLangModelRepository
+from ai_core.data_access.llm_db_repository import HFLangModelRepository
 from ai_core.service.download_ai_model_service import DownloadAIModelService
 from ai_core.utils.app_config import get_app_config, AppConfig
 

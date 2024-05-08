@@ -9,7 +9,7 @@ class AppConfig:
 
     def _load_env_vars(self) -> None:
         self.DATABASE_URL = os.getenv("DATABASE_URL")
-        self.LLM_STORAGE_PATH = os.getenv("LLM_STORAGE_PATH")
+        self.FILE_STORAGE_PATH = os.getenv("LLM_STORAGE_PATH")
 
 
 # Make a singleton instance of the Config class
